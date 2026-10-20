@@ -104,7 +104,7 @@ function resolveStation(slot) {
     return null;
   };
   return pick(net.exactStations(heard))
-    || pick(resolutionIds(slot))
+    || pick(resolutionIds(slot).map(net.stationNameById))
     || pick(net.findStations(heard))
     || { status: 'unknown', heard };
 }
@@ -113,8 +113,8 @@ function resolveLine(slot) {
   const heard = slot && slot.value;
   if (!heard) return { status: 'empty' };
   for (const id of resolutionIds(slot)) {
-    if (id.startsWith('TYPE:')) return { status: 'type', type: id.slice(5), heard };
-    if (id.startsWith('LINE:')) {
+    if (id.startsWith('TYPE_')) return { status: 'type', type: id.slice(5), heard };
+    if (id.startsWith('LINE_')) {
       const lineIds = net.lineIdsForText(id.slice(5));
       if (lineIds.length) return { status: 'line', lineIds, heard };
     }

@@ -117,6 +117,7 @@ test('Interaction Model ist gültig aufgebaut', () => {
   const allValues = new Set();
   for (const t of lm.types) {
     for (const v of t.values) {
+      assert.match(v.id, /^[A-Za-z0-9_]+$/, `ungültige Slot-ID "${v.id}"`);
       for (const s of [v.name.value, ...(v.name.synonyms || [])]) {
         assert.match(s, /^[\p{L}\p{N} ]+$/u, `ungültiger Slot-Wert "${s}"`);
         const key = `${t.name}:${s}`;

@@ -109,7 +109,10 @@ function buildNetwork({ haltestellen, haltepunkte, linien, fahrwege }) {
 
   const sortedStations = {};
   for (const name of Object.keys(stations).sort((a, b) => a.localeCompare(b, 'de'))) {
-    sortedStations[name] = stations[name];
+    // Slot-IDs dürfen keine Leerzeichen enthalten -> stabile ID aus der
+    // kleinsten DIVA-Nummer der Haltestelle
+    const divas = haltestellen.filter((h) => h.PlatformText === name).map((h) => Number(h.DIVA)).sort((a, b) => a - b);
+    sortedStations[name] = { id: `S${divas[0]}`, ...stations[name] };
   }
   // Orte außerhalb Wiens, damit "Richtung Josefsplatz" zu "Josefsplatz in Baden" wird
   const towns = {};
@@ -148,17 +151,17 @@ function stationSlotValues(network) {
     const parts = expanded.split(',').map((p) => p.trim()).filter(Boolean);
     if (parts.length === 2) variants.push(slotSafe(`${parts[1]} ${parts[0]}`));
     const synonyms = variants.map(take).filter(Boolean);
-    values.push({ id: name, name: synonyms.length ? { value: main, synonyms } : { value: main } });
+    values.push({ id: network.stations[name].id, name: synonyms.length ? { value: main, synonyms } : { value: main } });
   }
   return values;
 }
 
 const TYPE_VALUES = [
-  { id: 'TYPE:ptMetro', value: 'u bahn', synonyms: ['ubahn', 'u bahnen', 'metro'] },
-  { id: 'TYPE:ptTram', value: 'straßenbahn', synonyms: ['strassenbahn', 'bim', 'tram', 'straßenbahnen'] },
-  { id: 'TYPE:ptBusCity', value: 'bus', synonyms: ['autobus', 'busse', 'stadtbus'] },
-  { id: 'TYPE:ptBusNight', value: 'nachtbus', synonyms: ['nightline', 'nachtbusse'] },
-  { id: 'TYPE:ptTrainS', value: 's bahn', synonyms: ['schnellbahn', 'sbahn', 'zug', 'regionalzug'] },
+  { id: 'TYPE_ptMetro', value: 'u bahn', synonyms: ['ubahn', 'u bahnen', 'metro'] },
+  { id: 'TYPE_ptTram', value: 'straßenbahn', synonyms: ['strassenbahn', 'bim', 'tram', 'straßenbahnen'] },
+  { id: 'TYPE_ptBusCity', value: 'bus', synonyms: ['autobus', 'busse', 'stadtbus'] },
+  { id: 'TYPE_ptBusNight', value: 'nachtbus', synonyms: ['nightline', 'nachtbusse'] },
+  { id: 'TYPE_ptTrainS', value: 's bahn', synonyms: ['schnellbahn', 'sbahn', 'zug', 'regionalzug'] },
 ];
 
 function lineSynonyms(text, type) {
@@ -191,6 +194,10 @@ function lineSynonyms(text, type) {
   return { value: lower, synonyms: syn.map(slotSafe) };
 }
 
+function slotId(text) {
+  return String(text).replace(/[^A-Za-z0-9]/g, '_');
+}
+
 function lineSlotValues(network) {
   const used = new Set();
   const values = [];
@@ -207,7 +214,7 @@ function lineSlotValues(network) {
     const { value, synonyms } = lineSynonyms(text, type);
     const main = take(slotSafe(value));
     if (!main) continue;
-    values.push({ id: `LINE:${text}`, name: { value: main, synonyms: synonyms.map(take).filter(Boolean) } });
+    values.push({ id: `LINE_${slotId(text)}`, name: { value: main, synonyms: synonyms.map(take).filter(Boolean) } });
   }
   for (const t of TYPE_VALUES) {
     const main = take(t.value);

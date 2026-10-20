@@ -215,3 +215,29 @@ test('Reine Depotfahrten werden nicht als Linie angenommen', async () => {
   assert.equal(r.elicit, 'line');
   assert.match(r.text, /^Die 6 hält nicht an dieser Haltestelle/);
 });
+
+test('Namensauflösung von Alexa (Slot-IDs) wird verstanden', async () => {
+  const { createSkill } = require('../lambda/index');
+  const { MemoryAdapter } = require('../lambda/lib/persistence');
+  const { envelope } = require('./helpers');
+  const skill = createSkill({ persistenceAdapter: new MemoryAdapter(), fetchMonitor: fakeMonitor() });
+  const resolved = (heard, id) => ({
+    value: heard,
+    resolutions: { resolutionsPerAuthority: [{ status: { code: 'ER_SUCCESS_MATCH' }, values: [{ value: { name: heard, id } }] }] },
+  });
+  const res = await skill.invoke(envelope({
+    type: 'IntentRequest',
+    dialogState: 'STARTED',
+    intent: {
+      name: 'AddFavoriteIntent',
+      confirmationStatus: 'NONE',
+      slots: {
+        // so wie Alexa es schicken könnte: gehört, aber per ID aufgelöst
+        stop: { name: 'stop', confirmationStatus: 'NONE', ...resolved('asmayer gasse', 'S60200103') },
+        line: { name: 'line', confirmationStatus: 'NONE', ...resolved('zweiundsechziger', 'LINE_62') },
+        direction: { name: 'direction', confirmationStatus: 'NONE', value: 'oper' },
+      },
+    },
+  }));
+  assert.match(res.response.outputSpeech.ssml, /Gespeichert: die 62 an der Haltestelle Aßmayergasse/);
+});

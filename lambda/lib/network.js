@@ -104,6 +104,12 @@ const stationIndex = Object.keys(network.stations).map((name) => {
   return { name, keys, tokens: new Set(keys.join(' ').split(' ')) };
 });
 
+const stationNamesById = new Map(Object.entries(network.stations).map(([name, s]) => [s.id, name]));
+
+function stationNameById(id) {
+  return stationNamesById.get(id) || null;
+}
+
 function getStation(name) {
   const station = network.stations[name];
   return station ? { name, routes: station.routes } : null;
@@ -207,6 +213,7 @@ module.exports = {
   typeWithArticle,
   lineMatchesType,
   getStation,
+  stationNameById,
   exactStations,
   findStations,
   stationSpoken,
