@@ -5,9 +5,9 @@ Kosten: keine. Die Prüfung durch Amazon („Certification") dauert meist ein pa
 ## Vorher erledigen
 
 - [x] **E-Mail-Adresse** in `docs/datenschutz.md` eingetragen
-- [ ] Repository auf GitHub veröffentlichen
-- [ ] **GitHub Pages** einschalten: Repository → Settings → Pages → Source „Deploy from a branch" → Branch `main`, Ordner `/docs`
-- [ ] Prüfen, dass diese Seiten erreichbar sind:
+- [x] Repository auf GitHub veröffentlicht
+- [x] **GitHub Pages** eingeschaltet: Repository → Settings → Pages → Source „Deploy from a branch" → Branch `main`, Ordner `/docs`
+- [x] Diese Seiten sind erreichbar:
   - https://felixkyven.github.io/wiener-abfahrten/datenschutz
   - https://felixkyven.github.io/wiener-abfahrten/nutzungsbedingungen
 - [ ] Skill installiert und auf dem eigenen Echo getestet (siehe README)
