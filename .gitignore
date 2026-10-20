@@ -3,3 +3,5 @@ dist/
 .ask/
 .DS_Store
 *.zip
+.Rhistory
+.RData

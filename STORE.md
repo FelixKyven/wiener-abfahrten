@@ -4,7 +4,7 @@ Kosten: keine. Die Prüfung durch Amazon („Certification") dauert meist ein pa
 
 ## Vorher erledigen
 
-- [ ] **E-Mail-Adresse** in `docs/datenschutz.md` eintragen (Platzhalter `[E-MAIL-ADRESSE EINTRAGEN]`)
+- [x] **E-Mail-Adresse** in `docs/datenschutz.md` eingetragen
 - [ ] Repository auf GitHub veröffentlichen
 - [ ] **GitHub Pages** einschalten: Repository → Settings → Pages → Source „Deploy from a branch" → Branch `main`, Ordner `/docs`
 - [ ] Prüfen, dass diese Seiten erreichbar sind:

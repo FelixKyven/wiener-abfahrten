@@ -11,7 +11,7 @@ Diese Datenschutzerklärung gilt für den Alexa Skill **„Wiener Abfahrten"**.
 ## Verantwortlicher
 
 Felix Gehmair
-E-Mail: **[E-MAIL-ADRESSE EINTRAGEN]**
+E-Mail: **felix.gehmair@kyven.at**
 
 ## Welche Daten verarbeitet werden
 
