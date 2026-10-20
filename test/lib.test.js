@@ -141,3 +141,19 @@ test('Interaction Model ist gültig aufgebaut', () => {
     seen.set(s, name);
   }
 });
+
+test('Slots mit Rückfrage-Beispielen haben ein Dialogmodell mit Prompt', () => {
+  const model = require('../skill-package/interactionModels/custom/de-DE.json').interactionModel;
+  const promptIds = new Set(model.prompts.map((p) => p.id));
+  for (const intent of model.languageModel.intents) {
+    for (const slot of intent.slots || []) {
+      if (!slot.samples || !slot.samples.length) continue;
+      const dialogIntent = model.dialog.intents.find((i) => i.name === intent.name);
+      assert.ok(dialogIntent, `${intent.name} fehlt im Dialogmodell`);
+      const dialogSlot = dialogIntent.slots.find((s) => s.name === slot.name);
+      assert.ok(dialogSlot, `${intent.name}.${slot.name} fehlt im Dialogmodell`);
+      assert.equal(dialogSlot.elicitationRequired, true);
+      assert.ok(promptIds.has(dialogSlot.prompts.elicitation), `Prompt für ${intent.name}.${slot.name} fehlt`);
+    }
+  }
+});

@@ -13641,22 +13641,28 @@
               "name": "stop",
               "type": "STOP_NAME",
               "confirmationRequired": false,
-              "elicitationRequired": false,
-              "prompts": {}
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.AddFavoriteIntent.stop"
+              }
             },
             {
               "name": "line",
               "type": "LINE_NAME",
               "confirmationRequired": false,
-              "elicitationRequired": false,
-              "prompts": {}
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.AddFavoriteIntent.line"
+              }
             },
             {
               "name": "direction",
               "type": "STOP_NAME",
               "confirmationRequired": false,
-              "elicitationRequired": false,
-              "prompts": {}
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.AddFavoriteIntent.direction"
+              }
             }
           ]
         },
@@ -13670,14 +13676,53 @@
               "name": "line",
               "type": "LINE_NAME",
               "confirmationRequired": false,
-              "elicitationRequired": false,
-              "prompts": {}
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.RemoveFavoriteIntent.line"
+              }
             }
           ]
         }
       ],
       "delegationStrategy": "SKILL_RESPONSE"
     },
-    "prompts": []
+    "prompts": [
+      {
+        "id": "Elicit.Slot.AddFavoriteIntent.stop",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "An welcher Haltestelle steigst du ein?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.AddFavoriteIntent.line",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Welche Linie möchtest du speichern?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.AddFavoriteIntent.direction",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "In welche Richtung fährst du?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.RemoveFavoriteIntent.line",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Welche Linie soll ich löschen?"
+          }
+        ]
+      }
+    ]
   }
 }
