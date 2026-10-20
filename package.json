@@ -1,0 +1,14 @@
+{
+  "name": "wiener-abfahrten",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Alexa Skill: Echtzeit-Abfahrten der Wiener Linien",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "npm --prefix lambda install --no-audit --no-fund",
+    "test": "node --test test/*.test.js",
+    "build-data": "node tools/build-data.js",
+    "demo": "node tools/demo.js",
+    "package": "rm -rf dist && mkdir -p dist && cd lambda && zip -qr ../dist/lambda.zip . -x 'node_modules/*' '.DS_Store'"
+  }
+}

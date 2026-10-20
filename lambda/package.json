@@ -1,0 +1,14 @@
+{
+  "name": "wiener-abfahrten-lambda",
+  "version": "2.0.0",
+  "description": "Alexa Skill: Echtzeit-Abfahrten der Wiener Linien für deine gespeicherten Linien",
+  "main": "index.js",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {
+    "ask-sdk-core": "^2.14.0",
+    "ask-sdk-model": "^1.86.0"
+  }
+}

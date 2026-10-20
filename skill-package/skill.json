@@ -1,0 +1,57 @@
+{
+  "manifest": {
+    "manifestVersion": "1.0",
+    "publishingInformation": {
+      "locales": {
+        "de-DE": {
+          "name": "Wiener Abfahrten",
+          "summary": "Echtzeit-Abfahrten deiner Wiener Öffis: U-Bahn, Straßenbahn, Bus und Badner Bahn – einmal einrichten, dann einfach fragen.",
+          "description": "Wann kommt meine Bim? Wiener Abfahrten sagt dir die nächsten Abfahrten deiner Öffis in Echtzeit – ohne aufs Handy zu schauen.\n\nSo funktioniert's:\n1. Sag \"Alexa, öffne Wiener Abfahrten\".\n2. Nenne deine Haltestelle, deine Linie und die Richtung. Fertig.\n3. Ab jetzt reicht: \"Alexa, frag Wiener Abfahrten, wann kommt die 62?\" oder \"…, wann kommt der Bus?\"\n\nDu kannst bis zu 10 Linien an beliebigen Haltestellen speichern – U-Bahn, Straßenbahn, Bus, Nachtbus und Badner Bahn. Öffnest du den Skill, hörst du sofort alle deine Abfahrten.\n\nWeitere Befehle:\n• \"Linie hinzufügen\" – neue Linie speichern\n• \"Alle Abfahrten\" – alle gespeicherten Linien auf einmal\n• \"Was habe ich gespeichert?\" – deine Liste\n• \"Lösche die 62\" – Linie entfernen\n• \"Alles löschen\" – von vorne beginnen\n\nDatenquelle: Wiener Linien – data.wien.gv.at (CC BY 4.0). Dies ist kein offizielles Angebot der Wiener Linien. S-Bahn- und ÖBB-Züge sind nicht enthalten.",
+          "examplePhrases": [
+            "Alexa, öffne Wiener Abfahrten",
+            "Alexa, frag Wiener Abfahrten wann kommt die Straßenbahn",
+            "Alexa, sag Wiener Abfahrten Linie hinzufügen"
+          ],
+          "keywords": [
+            "Wien",
+            "Öffis",
+            "Abfahrt",
+            "Abfahrtszeiten",
+            "U-Bahn",
+            "Straßenbahn",
+            "Bim",
+            "Bus",
+            "Badner Bahn",
+            "Echtzeit"
+          ],
+          "smallIconUri": "file://assets/images/de-DE_smallIconUri.png",
+          "largeIconUri": "file://assets/images/de-DE_largeIconUri.png"
+        }
+      },
+      "isAvailableWorldwide": false,
+      "distributionCountries": [
+        "AT",
+        "DE"
+      ],
+      "distributionMode": "PUBLIC",
+      "testingInstructions": "Der Skill braucht keine Kontoverknüpfung. Beim ersten Start fragt er nach Haltestelle, Linie und Richtung.\n\nBeispielablauf:\n- \"Alexa, öffne Wiener Abfahrten\" -> fragt nach der Haltestelle\n- \"Karlsplatz\" -> nennt die Linien dort\n- \"U1\" -> fragt nach der Richtung\n- \"Leopoldau\" -> speichert, fragt nach weiterer Linie\n- \"Nein\"\n- \"Alexa, frag Wiener Abfahrten, wann kommt die U1\" -> Abfahrten in Minuten\n\nWeitere Haltestellen zum Testen: Schwedenplatz (U4), Westbahnhof (Linie 5), Aßmayergasse (62, 59A, Badner Bahn).\nDie Abfahrtszeiten sind Echtzeitdaten; nachts fahren viele Linien nicht, dann sagt der Skill, dass er keine Abfahrten findet.",
+      "category": "PUBLIC_TRANSPORTATION"
+    },
+    "apis": {
+      "custom": {}
+    },
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "usesPersonalInfo": false,
+      "isChildDirected": false,
+      "isExportCompliant": true,
+      "containsAds": false,
+      "locales": {
+        "de-DE": {
+          "privacyPolicyUrl": "https://felixkyven.github.io/wiener-abfahrten/datenschutz",
+          "termsOfUseUrl": "https://felixkyven.github.io/wiener-abfahrten/nutzungsbedingungen"
+        }
+      }
+    }
+  }
+}
