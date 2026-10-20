@@ -9,6 +9,7 @@
     "test": "node --test test/*.test.js",
     "build-data": "node tools/build-data.js",
     "demo": "node tools/demo.js",
-    "package": "rm -rf dist && mkdir -p dist && cd lambda && zip -qr ../dist/lambda.zip . -x 'node_modules/*' '.DS_Store'"
+    "package": "rm -rf dist && mkdir -p dist && cd lambda && zip -qr ../dist/lambda.zip . -x 'node_modules/*' '.DS_Store'",
+    "package:aws": "rm -rf dist/aws && mkdir -p dist/aws && cp -R lambda/index.js lambda/lib lambda/data lambda/package.json lambda/package-lock.json dist/aws/ && npm --prefix dist/aws ci --omit=dev --no-audit --no-fund && cd dist/aws && zip -qr ../lambda-aws.zip . -x '.DS_Store' && cd .. && rm -rf aws"
   }
 }

@@ -100,9 +100,37 @@ Du brauchst nur einen kostenlosen [Amazon-Developer-Account](https://developer.a
 4. Tab **Code** → **Import Code** → `dist/lambda.zip` wählen → alle Dateien übernehmen → **Deploy**.
 5. Weiter wie oben ab Schritt 6.
 
-### Variante C: eigene AWS Lambda + ASK CLI
+### Variante C: eigene AWS Lambda (wenn Alexa-hosted nicht klappt)
 
-Für alle, die selbst hosten wollen: DynamoDB-Tabelle mit Partition Key `id` (String) anlegen und in der Lambda die Umgebungsvariablen `DYNAMODB_PERSISTENCE_TABLE_NAME`, `DYNAMODB_PERSISTENCE_REGION` und optional `SKILL_ID` setzen. Runtime Node.js 18 oder neuer, Handler `index.handler`. Mit der [ASK CLI](https://developer.amazon.com/de-DE/docs/alexa/smapi/quick-start-alexa-skills-kit-command-line-interface.html) in `ask-resources.json` einen `skillInfrastructure`-Eintrag (`@ask-cli/lambda-deployer`) ergänzen und `ask deploy` ausführen.
+Meldet die Developer Console beim Anlegen *„Skill resources were not provisioned"*, liegt das an Amazons Hosting, nicht am Skill. Dann einfach selbst hosten – im AWS Free Tier ebenfalls kostenlos.
+
+Vorbereiten:
+
+```bash
+npm run package:aws
+```
+
+Das erzeugt `dist/lambda-aws.zip` (Code inklusive Abhängigkeiten).
+
+**In der AWS-Konsole** (Region **Europa (Irland) / eu-west-1**):
+
+1. **DynamoDB** → Tabelle erstellen: Name `wiener-abfahrten`, Partitionsschlüssel `id` (String), sonst Standardeinstellungen.
+2. **Lambda** → Funktion erstellen: Name `wiener-abfahrten`, Laufzeit **Node.js 22.x**.
+3. Code → **Hochladen von** → .zip-Datei → `dist/lambda-aws.zip`.
+4. Konfiguration → **Allgemein**: Timeout **10 Sekunden**, Arbeitsspeicher **256 MB**.
+5. Konfiguration → **Umgebungsvariablen**: `DYNAMODB_PERSISTENCE_TABLE_NAME` = `wiener-abfahrten`, `DYNAMODB_PERSISTENCE_REGION` = `eu-west-1`.
+6. Konfiguration → **Berechtigungen** → Rollenname anklicken → Berechtigungen hinzufügen → Inline-Richtlinie → JSON → Inhalt von [`tools/dynamodb-policy.json`](tools/dynamodb-policy.json) einfügen.
+7. **ARN** der Funktion (oben rechts) kopieren.
+
+**In der Alexa Developer Console:**
+
+1. Create Skill → German (DE) → Experience **Other**, Model **Custom**, Hosting **Provision your own** → Template **Start from Scratch**.
+2. Build → Interaction Model → **JSON Editor** → `skill-package/interactionModels/custom/de-DE.json` hineinziehen → Save → **Build skill**.
+3. Build → **Endpoint** → AWS Lambda ARN → bei *Default Region* die ARN aus Schritt 7 einfügen → Save. Die **Skill ID** oben auf dieser Seite kopieren.
+4. Zurück in AWS: Lambda → **Auslöser hinzufügen** → *Alexa* → *Alexa Skills Kit* → Skill ID einfügen.
+5. Tab **Test** → **Development**.
+
+Optional: Mit der Umgebungsvariable `SKILL_ID` nimmt die Lambda nur Anfragen dieses Skills an. Mit der [ASK CLI](https://developer.amazon.com/de-DE/docs/alexa/smapi/quick-start-alexa-skills-kit-command-line-interface.html) geht das Ganze auch automatisiert (`skillInfrastructure` mit `@ask-cli/lambda-deployer` in `ask-resources.json` ergänzen, dann `ask deploy`).
 
 ## Daten aktualisieren
 
